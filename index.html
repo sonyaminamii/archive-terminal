@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE TERMINAL</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #090d0b;
+        color: #8bc9a0;
+        font-family: "Courier New", monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .terminal {
+        width: 100%;
+        max-width: 650px;
+        border: 1px solid #315a40;
+        padding: 30px;
+        background: #0c120e;
+        box-shadow: 0 0 30px #16382255;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #315a40;
+        padding-bottom: 15px;
+        margin-bottom: 35px;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .status {
+        color: #6cbd80;
+    }
+
+    h1 {
+        font-size: 25px;
+        font-weight: normal;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        color: #647c6a;
+        font-size: 12px;
+        margin-bottom: 30px;
+    }
+
+    label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 10px;
+        color: #769b7f;
+    }
+
+    input {
+        width: 100%;
+        padding: 15px;
+        background: #080c09;
+        border: 1px solid #315a40;
+        color: #b6eac3;
+        font-family: inherit;
+        font-size: 18px;
+        outline: none;
+        margin-bottom: 15px;
+    }
+
+    input:focus {
+        border-color: #8bc9a0;
+        box-shadow: 0 0 8px #315a40;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #193b25;
+        border: 1px solid #4c805a;
+        color: #b6eac3;
+        font-family: inherit;
+        letter-spacing: 2px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #285637;
+    }
+
+    .response {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #315a40;
+        min-height: 90px;
+        font-size: 13px;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .muted {
+        color: #506a56;
+    }
+
+    .error {
+        color: #c66b6b;
+    }
+
+    @media (max-width: 480px) {
+        .terminal {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+
+    <div class="header">
+        <span>ARCHIVE TERMINAL v1.0</span>
+        <span class="status">● ONLINE</span>
+    </div>
+
+    <h1>IDENTIFICATION REQUIRED</h1>
+
+    <div class="description">
+        ENTER AUTHORIZATION CODE TO CONTINUE
+    </div>
+
+    <form id="access-form">
+        <label for="code">ACCESS CODE:</label>
+
+        <input
+            type="text"
+            id="code"
+            placeholder="Enter code..."
+            autocomplete="off"
+            spellcheck="false"
+        >
+
+        <button type="submit">SUBMIT</button>
+    </form>
+
+    <div class="response" id="response">
+        <span class="muted">SYSTEM READY. AWAITING INPUT...</span>
+    </div>
+
+</div>
+
+<script>
+
+// DATABASE: EDIT YOUR CODES AND MESSAGES HERE
+
+const database = {
+    "731942": "ACCESS GRANTED.\n\nThe archive was last accessed on 17.04.2011.",
+
+    "004281": "RECORD FOUND.\n\nSubject: UNKNOWN.\nStatus: MISSING.",
+
+    "19062011": "WARNING.\n\nYou were not supposed to find this."
+};
+
+// PROCESS USER INPUT
+
+document.getElementById("access-form").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const input = document.getElementById("code");
+    const response = document.getElementById("response");
+
+    const code = input.value.trim();
+
+    if (database[code] !== undefined) {
+        response.className = "response";
+        response.textContent = database[code];
+    } else {
+        response.className = "response error";
+        response.textContent = "ACCESS DENIED.\n\nINVALID IDENTIFICATION CODE.";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
